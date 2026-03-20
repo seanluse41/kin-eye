@@ -15,6 +15,7 @@
     "@tauri-apps/plugin-http": "^2.5.7",
     "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-os": "^2.3.2",
+    "@tauri-apps/plugin-store": "^2.4.2",
     "svelte-i18n": "^4.0.1"
   },
   "devDependencies": {

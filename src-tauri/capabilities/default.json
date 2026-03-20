@@ -2,7 +2,9 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
     "os:default",
@@ -10,16 +12,25 @@
     {
       "identifier": "opener:allow-open-url",
       "allow": [
-        { "url": "https://*.kintone.com/*" },
-        { "url": "https://*.cybozu.com/*" }
+        {
+          "url": "https://*.kintone.com/*"
+        },
+        {
+          "url": "https://*.cybozu.com/*"
+        }
       ]
     },
     {
       "identifier": "http:default",
       "allow": [
-        { "url": "https://*.kintone.com" },
-        { "url": "https://*.cybozu.com" }
+        {
+          "url": "https://*.kintone.com"
+        },
+        {
+          "url": "https://*.cybozu.com"
+        }
       ]
-    }
+    },
+    "store:default"
   ]
 }
