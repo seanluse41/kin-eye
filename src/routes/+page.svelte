@@ -15,10 +15,10 @@
   <h1>Welcome to Tauri + Svelte</h1>
 
   <div class="row">
-    <a href="https://vite.dev" target="_blank">
+    <a href="https://sean.kintone.com" target="_blank">
       <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
     </a>
-    <a href="https://tauri.app" target="_blank">
+    <a href="https://sean.cybozu.com" target="_blank">
       <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
     </a>
     <a href="https://svelte.dev" target="_blank">
