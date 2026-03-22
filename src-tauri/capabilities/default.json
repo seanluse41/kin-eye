@@ -17,6 +17,9 @@
         },
         {
           "url": "https://*.cybozu.com/*"
+        },
+        {
+          "url": "https://so076lfi46.execute-api.ap-northeast-1.amazonaws.com/Prod/callback"
         }
       ]
     },

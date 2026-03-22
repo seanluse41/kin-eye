@@ -5,7 +5,8 @@ use tauri_plugin_deep_link::DeepLinkExt;
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::new().build())
-        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+        .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
+            println!("single instance triggered, args: {:?}", args);
             if let Some(window) = app.get_webview_window("main") {
                 let _ = window.set_focus();
             }
@@ -19,8 +20,7 @@ pub fn run() {
             app.deep_link().register_all()?;
 
             app.deep_link().on_open_url(|event| {
-                println!("hello from deep link");
-                println!("urls: {:?}", event.urls());
+                println!("deep link received, urls: {:?}", event.urls());
             });
 
             Ok(())
