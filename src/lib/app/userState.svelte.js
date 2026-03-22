@@ -35,7 +35,7 @@ export async function handleCallback(code, state) {
   }
   userState.pendingState = null;
 
-  const res = await fetch(`${LAMBDA_BASE}/token/exchange`, {
+  const res = await fetch(`${LAMBDA_BASE}/exchange`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

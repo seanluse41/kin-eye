@@ -1,14 +1,16 @@
-use tauri::Manager;
 use tauri_plugin_deep_link::DeepLinkExt;
+use tauri::{Emitter, Manager};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
-            println!("single instance triggered, args: {:?}", args);
             if let Some(window) = app.get_webview_window("main") {
                 let _ = window.set_focus();
+            }
+            if let Some(url) = args.get(1) {
+                let _ = app.emit("deep-link-received", url.clone());
             }
         }))
         .plugin(tauri_plugin_deep_link::init())
@@ -18,11 +20,6 @@ pub fn run() {
         .setup(|app| {
             #[cfg(any(windows, target_os = "linux"))]
             app.deep_link().register_all()?;
-
-            app.deep_link().on_open_url(|event| {
-                println!("deep link received, urls: {:?}", event.urls());
-            });
-
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet])
