@@ -18,6 +18,7 @@ export const userState = $state({
   pendingState: null,
   loginName: null,
   displayName: null,
+  isAdmin: true
 });
 
 export function getAuthUrl() {
@@ -58,14 +59,18 @@ export async function handleCallback(code, state) {
   userState.accessToken = tokens.access_token;
   userState.refreshToken = tokens.refresh_token;
   userState.expiresAt = Date.now() + tokens.expires_in * 1000;
-  const identity = await resolveIdentity(tokens.access_token);
+
+  const identity = await resolveIdentity();
+  console.log('identity resolved:', identity);
   userState.loginName = identity.loginName;
   userState.displayName = identity.displayName;
+  console.log('handleCallback complete');
 }
 
-async function resolveIdentity(accessToken) {
+async function resolveIdentity() {
   const { id } = await postRecord(KINTONE.subdomain, IDENTITY_APP_ID);
   const { record } = await getRecord(KINTONE.subdomain, IDENTITY_APP_ID, id);
+  console.log(record)
   const creatorField = Object.values(record).find(f => f.type === "CREATOR");
   return {
     loginName: creatorField.value.code,

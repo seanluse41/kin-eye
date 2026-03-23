@@ -1,9 +1,11 @@
 // $lib/kintone/request.js
 // use this wrapper for all requests because it will auto retry if oauth token has failed ok
 import { fetch } from "@tauri-apps/plugin-http";
-import { userState, refreshAccessToken } from "$lib/app/userState.svelte";
+import { userState, refreshAccessToken } from "$lib/app/userState.svelte.js";
 
 export async function kintoneRequest(options) {
+  console.log('token:', userState.accessToken);
+  console.trace();
   const doRequest = () => fetch(options.url, {
     method: options.method ?? "GET",
     headers: {
@@ -15,6 +17,7 @@ export async function kintoneRequest(options) {
   });
 
   let res = await doRequest();
+  console.log(res)
 
   if (res.status === 401) {
     await refreshAccessToken();
