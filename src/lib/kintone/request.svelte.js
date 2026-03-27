@@ -23,6 +23,10 @@ export async function kintoneRequest(options) {
     await refreshAccessToken();
     res = await doRequest();
   }
-
+  if (!res.ok) {
+    const err = await res.json();
+    console.error('Kintone API error:', res.status, err);
+    throw new Error(`Kintone ${res.status}: ${err.message || JSON.stringify(err)}`);
+  }
   return res.json();
 }
