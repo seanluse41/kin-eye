@@ -1,6 +1,8 @@
 <script>
   import { openUrl } from '@tauri-apps/plugin-opener';
   import { getAuthUrl, userState } from '$lib/app/userState.svelte';
+  import { Alert } from "flowbite-svelte";
+
 </script>
 
 <button onclick={() => openUrl(getAuthUrl())}>
@@ -10,7 +12,11 @@
 {#if userState.accessToken}
   <p>Logged in ✓</p>
   <pre>{JSON.stringify(userState, null, 2)}</pre>
-{:else}
-  <p>Not logged in</p>
-  <button onclick={login}>Connect Kintone</button>
 {/if}
+
+<div class="p-8">
+  <Alert>
+    <span class="font-medium">Info alert!</span>
+    Change a few things up and try submitting again.
+  </Alert>
+</div>
