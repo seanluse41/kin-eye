@@ -61,17 +61,16 @@ export async function handleCallback(code, state) {
   userState.expiresAt = Date.now() + tokens.expires_in * 1000;
 
   const identity = await resolveIdentity();
-  console.log('identity resolved:', identity);
   userState.loginName = identity.loginName;
   userState.displayName = identity.displayName;
-  console.log('handleCallback complete');
 }
 
 async function resolveIdentity() {
-  const { id } = await postRecord(KINTONE.subdomain, IDENTITY_APP_ID);
-  const { record } = await getRecord(KINTONE.subdomain, IDENTITY_APP_ID, id);
-  console.log(record)
-  const creatorField = Object.values(record).find(f => f.type === "CREATOR");
+  resolveIdentityCallCount++;
+  const postRes = await postRecord(KINTONE.subdomain, IDENTITY_APP_ID);
+  const { id } = postRes;
+  const getRes = await getRecord(KINTONE.subdomain, IDENTITY_APP_ID, id);
+  const creatorField = Object.values(getRes.record).find(f => f.type === "CREATOR");
   return {
     loginName: creatorField.value.code,
     displayName: creatorField.value.name,
