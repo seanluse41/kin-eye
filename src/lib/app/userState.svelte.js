@@ -12,6 +12,7 @@ const KINTONE = {
 };
 
 export const userState = $state({
+  isLoggedIn: false,
   accessToken: null,
   refreshToken: null,
   expiresAt: null,
@@ -63,10 +64,10 @@ export async function handleCallback(code, state) {
   const identity = await resolveIdentity();
   userState.loginName = identity.loginName;
   userState.displayName = identity.displayName;
+  userState.isLoggedIn = true;
 }
 
 async function resolveIdentity() {
-  resolveIdentityCallCount++;
   const postRes = await postRecord(KINTONE.subdomain, IDENTITY_APP_ID);
   const { id } = postRes;
   const getRes = await getRecord(KINTONE.subdomain, IDENTITY_APP_ID, id);
@@ -93,4 +94,13 @@ export async function refreshAccessToken() {
   userState.accessToken = tokens.access_token;
   userState.refreshToken = tokens.refresh_token;
   userState.expiresAt = Date.now() + tokens.expires_in * 1000;
+}
+
+export function logout() {
+  userState.accessToken = null;
+  userState.refreshToken = null;
+  userState.expiresAt = null;
+  userState.loginName = null;
+  userState.displayName = null;
+  userState.isLoggedIn = false;
 }

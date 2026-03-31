@@ -9,7 +9,7 @@
   Connect Kintone
 </button>
 
-{#if userState.accessToken}
+{#if userState.isLoggedIn}
   <p>Logged in ✓</p>
   <pre>{JSON.stringify(userState, null, 2)}</pre>
 {/if}
